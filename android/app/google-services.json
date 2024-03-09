@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "904412931568",
+    "project_id": "ptktpm-project",
+    "storage_bucket": "ptktpm-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904412931568:android:58f7d57aaf7819c258e935",
+        "android_client_info": {
+          "package_name": "com.example.ptktpm_final_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC89TpjS0ux0a1H2It4VegXMs1B-ZR6ZU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
