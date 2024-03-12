@@ -156,7 +156,7 @@ class Register extends StatelessWidget{
                                 );
                               }
                               else{
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký không thành công")));
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký không thành công.")));
                               }
                             }
                           },
