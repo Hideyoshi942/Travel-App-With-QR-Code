@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ptktpm_final_project/model/Account.dart';
 import 'package:ptktpm_final_project/view/Account/Login.dart';
 
 
@@ -142,12 +143,13 @@ class Register extends StatelessWidget{
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Xác nhận password không đúng")));
                             }
                             else {
+                              Account account = Account(id: _emailController.text, userName: _userNameController.text, password: _passwordController.text);
                               User? user = await _auth.registerUserWithEmailAndPassword(_emailController.text, _passwordController.text);
                               if(user != null){
                                 _fireStore.addData({
-                                  'id' : _emailController.text,
-                                  'username' : _userNameController.text,
-                                  'password' : _passwordController.text,
+                                  'id' : account.id,
+                                  'username' : account.user_name,
+                                  'password' : account.password,
                                 }, 'Account');
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký thành công")));
                                 Navigator.pushReplacement(
@@ -156,7 +158,7 @@ class Register extends StatelessWidget{
                                 );
                               }
                               else{
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký không thành công.")));
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký không thành công")));
                               }
                             }
                           },
