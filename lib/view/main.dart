@@ -19,21 +19,3 @@ Future<void> main() async {
   runApp(MaterialApp(home: Login(),debugShowCheckedModeBanner: false,)
   );
 }
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Firebase Authentication",
-      initialRoute: "/",
-      routes: {
-        "/": (context) => News_feed(),
-        "/register": (context) => Register(),
-        "/login": (context) => Login(),
-      },
-    );
-  }
-}
-

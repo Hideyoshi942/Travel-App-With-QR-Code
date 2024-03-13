@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -6,6 +7,11 @@ class FirebaseAuthService{
 
   Future<User?> registerUserWithEmailAndPassword(String strEmail, String strPassword) async{
     try{
+      QuerySnapshot query = await FirebaseFirestore.instance.collection("Account").where('id', isEqualTo: strEmail).get();
+      if(query.docs.length > 0){
+        print("email đã tồn tại");
+        return null;
+      }
       UserCredential credential = await _auth.createUserWithEmailAndPassword(email: strEmail, password: strPassword);
       return credential.user;
     }

@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ptktpm_final_project/model/Account.dart';
 import 'package:ptktpm_final_project/view/Account/Login.dart';
+import 'package:ptktpm_final_project/view/User/User_information.dart';
 
 
 import '../../control/Firebase_authen.dart';
 import '../../control/Firebase_data_processing.dart';
 import '../News_feed/News_feed.dart';
+import '../User/update_user_information.dart';
 
 class Register extends StatelessWidget{
 
@@ -151,14 +153,17 @@ class Register extends StatelessWidget{
                                   'username' : account.user_name,
                                   'password' : account.password,
                                 }, 'Account');
+
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký thành công")));
                                 Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => News_feed()),
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Update_user_information(account.id),
+                                    )
                                 );
                               }
                               else{
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký không thành công")));
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký không thành công(Email đã tồn tại)")));
                               }
                             }
                           },

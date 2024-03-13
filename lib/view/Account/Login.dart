@@ -1,14 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ptktpm_final_project/view/News_feed/News_feed.dart';
 import '../../control/Firebase_authen.dart';
+import '../../control/Firebase_data_processing.dart';
 import './Register.dart';
 
 class Login extends StatelessWidget{
   final FirebaseAuthService _auth = FirebaseAuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  FireStoreService _store = FireStoreService();
+  
+  Future<int?> idNews_Feed(String valueField) async {
+    QuerySnapshot? query = await _store.getData("User", "id_Account", valueField);
+    if(query != null){
+      query.docs.forEach((document) {
+        if(document["id_Account"] == valueField){
+          return document["id_News_Feed"];
+        }
+      });
+    }
+    else{
+      print("Không lấy được idNews_Feed");
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
