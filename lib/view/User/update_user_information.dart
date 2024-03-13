@@ -68,16 +68,17 @@ class Update_user_information extends StatelessWidget{
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("số điện thoại chỉ có thể là các ch số")));
                       }
                       else{
+                        String? id = await
+                        _store.addData({"title" : "0"}, "News_Feed") ;
                         DateFormat dateformat = DateFormat('yyy/MM/dd');
                         String date = dateformat.format(DateTime.now());
                         QuerySnapshot query = await FirebaseFirestore.instance.collection("News_Feed").get();
-                        int News_Feed_number = query.docs.length;
                         _firestore.addData({
                           'name' : _nameController.text.trim(),
                           'phone_Number' : _phoneNumberController.text.trim(),
                           'date' : date,
                           'id_Account' : _id_Account,
-                          'id_News_Feed' : News_Feed_number,
+                          'id_News_Feed' : id,
                         }, "User");
                         QuerySnapshot? queryUser = await _store.getData("User", 'id_Account', _id_Account);
                         if(query != null){

@@ -12,21 +12,6 @@ class Login extends StatelessWidget{
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   FireStoreService _store = FireStoreService();
-  
-  Future<int?> idNews_Feed(String valueField) async {
-    QuerySnapshot? query = await _store.getData("User", "id_Account", valueField);
-    if(query != null){
-      query.docs.forEach((document) {
-        if(document["id_Account"] == valueField){
-          return document["id_News_Feed"];
-        }
-      });
-    }
-    else{
-      print("Không lấy được idNews_Feed");
-      return null;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +19,10 @@ class Login extends StatelessWidget{
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot){
           if(snapshot.hasData){
-            return News_feed();
+            User? user = snapshot.data;
+            String? id_Account = user?.email;
+            return News_Feed(_store.getData("User", "id_Account", id_Account));
+            return(Text("!"));
           }
           else{
             return Scaffold(
@@ -51,8 +39,6 @@ class Login extends StatelessWidget{
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
-
                       Image.asset(
                         "assets/iconLogin.png", // Đường dẫn đến biểu tượng trong thư mục assets
                         width: 200, // Thay đổi kích thước của biểu tượng theo ý muốn
@@ -98,6 +84,7 @@ class Login extends StatelessWidget{
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
                             ),
                             onPressed: () async {
+                              String id_News_Feed = "";
                               if(_emailController.text == ""){
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Chưa nhập email")));
                               }
@@ -107,10 +94,14 @@ class Login extends StatelessWidget{
                               else{
                                 User? user = await _auth.loginUserWithEmailAndPassword(_emailController.text, _passwordController.text);
                                 if(user != null){
+                                  String id_Acount = _emailController.text;
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng nhập thành công")));
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => News_feed(),));
+                                  Navigator.pushReplacement(
+                                      context, MaterialPageRoute(
+                                    builder: (context) => News_Feed(_store.getData("User", "id_Account", id_Acount)),));
                                   _emailController.clear();
                                   _passwordController.clear();
+
                                 }
                                 else{
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng nhập không thành công")));

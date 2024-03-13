@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ptktpm_final_project/view/News_feed/News_feed.dart';
 
 import '../../control/Firebase_data_processing.dart';
 
@@ -24,6 +25,7 @@ class User_information_state extends State<User_information>{
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _idAccountController = TextEditingController();
+  late String _id_NewsFeed;
   FireStoreService _store = FireStoreService();
 
   void _showConfirmationDialog(BuildContext context) {
@@ -88,7 +90,13 @@ class User_information_state extends State<User_information>{
                             backgroundColor: Colors.blueAccent,
                             foregroundColor: Colors.black87,
                         ),
-                        onPressed: (){}, 
+                        onPressed: () async {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => News_Feed(_store.getData("User", widget._nameField, widget._valueField)),));
+
+                        },
                         child: Icon(Icons.close,size: 40, color: Colors.yellow,)
                     )
                   ],
