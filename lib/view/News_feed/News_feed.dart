@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ptktpm_final_project/view/User/User_information.dart';
 
 import '../../control/Firebase_authen.dart';
@@ -46,6 +47,7 @@ class News_Feed_State extends State<News_Feed>{
                       }, child: Icon(Icons.person)
                     ),
                     ElevatedButton(onPressed: () async {
+                      await GoogleSignIn().signOut();
                         await _auth.SignOut();
                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login(),));
                       }, child: Icon(Icons.logout)

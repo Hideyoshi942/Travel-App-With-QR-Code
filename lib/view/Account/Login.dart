@@ -2,7 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ptktpm_final_project/view/News_feed/News_feed.dart';
+import 'package:ptktpm_final_project/view/User/User_information.dart';
+import 'package:ptktpm_final_project/view/User/update_user_information.dart';
 import '../../control/Firebase_authen.dart';
 import '../../control/Firebase_data_processing.dart';
 import './Register.dart';
@@ -13,6 +17,20 @@ class Login extends StatelessWidget{
   final TextEditingController _passwordController = TextEditingController();
   FireStoreService _store = FireStoreService();
 
+  Future<String?> signInWithGoogle() async{
+    GoogleSignInAccount? googleUSer = await GoogleSignIn().signIn();
+    String? email = googleUSer?.email;
+    GoogleSignInAuthentication? googleAuth = await googleUSer?.authentication;
+
+    AuthCredential credential =  GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+    return email;
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
@@ -22,7 +40,6 @@ class Login extends StatelessWidget{
             User? user = snapshot.data;
             String? id_Account = user?.email;
             return News_Feed(_store.getData("User", "id_Account", id_Account));
-            return(Text("!"));
           }
           else{
             return Scaffold(
@@ -104,7 +121,8 @@ class Login extends StatelessWidget{
 
                                 }
                                 else{
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng nhập không thành công")));
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("Đăng nhập không thành công")));
                                 }
                               }
                             },
@@ -130,10 +148,49 @@ class Login extends StatelessWidget{
                             child: Text("Đăng kí", style: TextStyle(fontSize: 20),),
 
                           ),
-
-
                         ],
-                      )
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.lightBlueAccent,
+                              foregroundColor: Colors.indigo,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+                          ),
+
+                          onPressed: () async {
+                            String? email = await signInWithGoogle();
+                            QuerySnapshot? query = await _store.getData("Account", "id", email);
+                            if(query?.size == 0){
+                              _store.addData({
+                                'id' : email,
+                                'password' : "",
+                                'username' : email,
+                              }, 'Account');
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Update_user_information(email!),));
+                            }
+                            else{
+                              DocumentSnapshot? document = query?.docs.first;
+                              if(document != null){
+                                String id_Account = document["id_Account"];
+
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => News_Feed(
+                                          _store.getData("User", "id_Account", id_Account)
+                                      ),
+                                    )
+                                );
+                              }
+                            }
+                          },
+                          icon: FaIcon(FontAwesomeIcons.google),
+                          label: Text("Đăng Nhập Bằng Google", style: TextStyle(fontSize: 20)),
+                      ),
                     ],
                   ),
                 ),
