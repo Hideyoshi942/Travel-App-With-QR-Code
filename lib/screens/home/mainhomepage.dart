@@ -1,9 +1,11 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:ptktpm_final_project/main.dart';
 import 'package:ptktpm_final_project/screens/home/myhomepage.dart';
+import 'package:ptktpm_final_project/screens/user/camera.dart';
 import 'package:ptktpm_final_project/screens/user/favorite.dart';
 import 'package:ptktpm_final_project/screens/user/information.dart';
 import 'package:ptktpm_final_project/screens/user/newsfeed.dart';
-
 class MainHomePage extends StatefulWidget {
   const MainHomePage({super.key});
 
@@ -15,7 +17,7 @@ class _MainHomePageState extends State<MainHomePage> {
   List pages = [
     MyHomePage(),
     NewsFeed(),
-    Information(),
+    PhotoScreen(camera: cameras),
     Favorite(),
     Information(),
   ];

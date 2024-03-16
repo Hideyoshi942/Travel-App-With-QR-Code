@@ -46,6 +46,18 @@ dependencies:
   firebase_storage: ^11.6.9
   google_sign_in: ^6.2.1
   another_carousel_pro: ^1.0.2
+  camera: ^0.10.5+9
+  qr_code_scanner: ^1.0.1
+  path: ^1.8.3
+  assets_audio_player: ^3.0.4+3
+  path_provider: ^2.1.2
+  image_gallery_saver: ^2.0.1
+  gallery_saver: ^2.3.2
+  permission_handler: ^10.2.0
+  flutter_barcode_scanner: ^2.0.0
+  flutter_xlider: ^3.5.0
+  image: ^4.0.15
+  syncfusion_flutter_sliders: ^21.2.9
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +89,7 @@ flutter:
     - assets/images/tour/tour_1/
     - assets/images/icon/
     - assets/images/icon/tien_ich/
+    - assets/camera/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

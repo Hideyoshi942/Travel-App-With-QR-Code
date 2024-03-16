@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,9 +10,13 @@ import 'package:ptktpm_final_project/screens/login/login.dart';
 import 'package:ptktpm_final_project/screens/tour/cartView.dart';
 import 'package:ptktpm_final_project/screens/tour/detailView.dart';
 import 'package:ptktpm_final_project/screens/tour/listTour.dart';
+import 'package:camera/camera.dart';
+
+List<CameraDescription> cameras = [];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: FirebaseOptions(
