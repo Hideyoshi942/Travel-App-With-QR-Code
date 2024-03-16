@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:ptktpm_final_project/screens/tour/detailView.dart';
 import 'package:ptktpm_final_project/screens/tour/listTour.dart';
 import 'package:ptktpm_final_project/screens/tour/tourView.dart';
+import 'package:ptktpm_final_project/screens/user/chat.dart';
 import 'package:ptktpm_final_project/screens/user/information.dart';
+import 'package:ptktpm_final_project/screens/user/notify.dart';
 import 'package:ptktpm_final_project/services/dataprocessign.dart';
 import '../tour/tourModel.dart';
 
@@ -352,14 +354,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Notify(),
+                    ),
+                  );
+                },
                 icon: Icon(
                   Icons.notifications,
                   color: Colors.white,
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Chat(),
+                    ),
+                  );
+                },
                 icon: Icon(
                   Icons.message,
                   color: Colors.white,
