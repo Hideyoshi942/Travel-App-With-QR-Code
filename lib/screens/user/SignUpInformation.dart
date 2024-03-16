@@ -66,16 +66,25 @@ class SignUpInformationState extends State<SignUpInformation>{
             ),
             
             ElevatedButton(onPressed: (){
-              Map<String, dynamic> data = {
-                'name' : _nameController.text,
-                'email' : widget.email,
-                'phone_Number' : _phoneNumberController.text,
-                'date' : DateFormat('yyyy/MM/dd').format(DateTime.now()),
-              };
-              _store.addData(data, "User");
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("ập nhật dữ liệu thành công")));
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Information(widget.email),));
-            }, child: Text("Cập Nhật", style: TextStyle(fontSize: 30),))
+                if(int.tryParse(_phoneNumberController.text) == null || _phoneNumberController.text.length != 10){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Số điện thoại phải là 10 chữ số")));
+                }
+                else {
+                    Map<String, dynamic> data = {
+                      'name': _nameController.text,
+                      'email': widget.email,
+                      'phone_Number': _phoneNumberController.text,
+                      'date': DateFormat('yyyy/MM/dd').format(DateTime.now()),
+                    };
+                    _store.addData(data, "User");
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("ập nhật dữ liệu thành công")));
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => Information(widget.email),));
+                  }
+                },
+                child: Text("Cập Nhật", style: TextStyle(fontSize: 30),)
+            )
           ],
         ),
       ),

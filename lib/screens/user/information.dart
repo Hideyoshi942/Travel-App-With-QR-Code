@@ -161,11 +161,20 @@ class _InformationState extends State<Information> {
                                         "name" : _nameController.text,
                                         "phone_Number" : _phoneNumberController.text,
                                       };
-                                      _store.updateData("User", document!.id, newdata);
-                                      ScaffoldMessenger.of(context).
-                                      showSnackBar(SnackBar(content: Text("thông tin cá nhân đã được cập nhật")));
-                                      Navigator.of(context).pop();
-                                      print('chon sua doi thong tin');
+                                      if(int.tryParse(_phoneNumberController.text) == null || _phoneNumberController.text.length != 10){
+                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Số điện thoại phải là 10 chữ số")));
+                                      }
+                                      else if(_nameController.text == ""){
+                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Thiếu tên")));
+
+                                      }
+                                      else{
+                                        _store.updateData("User", document!.id, newdata);
+                                        ScaffoldMessenger.of(context).
+                                        showSnackBar(SnackBar(content: Text("thông tin cá nhân đã được cập nhật")));
+                                        Navigator.of(context).pop();
+                                        print('chon sua doi thong tin');
+                                      }
                                     },
                                     child: Text('Yes'),
                                   ),
