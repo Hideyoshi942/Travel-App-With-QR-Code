@@ -1,10 +1,8 @@
 class Account{
-  late String _id;
   late String _user_name;
   late String _password;
 
-  Account({required String id, required String userName, required String password}) {
-    _id = id;
+  Account({required String userName, required String password}) {
     _user_name = userName;
     _password = password;
   }
@@ -19,11 +17,5 @@ class Account{
 
   set user_name(String value) {
     _user_name = value;
-  }
-
-  String get id => _id;
-
-  set id(String value) {
-    _id = value;
   }
 }

@@ -30,7 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.19.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,10 +37,29 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.26.0
   firebase_auth: ^4.17.7
-  google_sign_in: ^6.2.1
-  cloud_firestore: ^4.15.8
   provider: ^6.1.2
+  flutter_launcher_icons: ^0.13.1
+  image_picker: ^1.0.7
+  flutter_local_notifications: ^16.3.3
+  animations: ^2.0.11
+  cloud_firestore: ^4.15.8
+  firebase_storage: ^11.6.9
+  google_sign_in: ^6.2.1
+  another_carousel_pro: ^1.0.2
+  camera: ^0.10.5+9
+  qr_code_scanner: ^1.0.1
+  path: ^1.8.3
+  assets_audio_player: ^3.0.4+3
+  path_provider: ^2.1.2
+  image_gallery_saver: ^2.0.1
+  gallery_saver: ^2.3.2
+  permission_handler: ^10.2.0
+  flutter_barcode_scanner: ^2.0.0
+  flutter_xlider: ^3.5.0
+  image: ^4.0.15
+  syncfusion_flutter_sliders: ^21.2.9
   font_awesome_flutter: ^10.7.0
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
@@ -59,12 +77,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-  assets:
-    - assets/login.jpg
-    - assets/iconLogin.png
-    - assets/iconGoogle.jpg
-    - assets/iconInformationUser.png
-    - assets/user_information.webp
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -74,6 +87,10 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/tour/tour_1/
+    - assets/images/icon/
+    - assets/images/icon/tien_ich/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
