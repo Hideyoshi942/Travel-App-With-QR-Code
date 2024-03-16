@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ptktpm_final_project/screens/home/mainhomepage.dart';
 import 'package:ptktpm_final_project/services/dataprocessign.dart';
 import '../../services/auth.dart';
 import '../login/login.dart';
@@ -27,6 +28,18 @@ class _InformationState extends State<Information> {
     return Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(actions: [
+
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              shape: CircleBorder(),
+              padding: EdgeInsets.all(10)
+          ),
+          child: Icon(Icons.home),
+          onPressed: () async {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainHomePage(widget.email),));
+          },
+        ),
+        SizedBox(width: 262,),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
               shape: CircleBorder(),

@@ -123,6 +123,7 @@ class _SignInState extends State<SignIn> {
                               User? user = await _auth.loginUserWithEmailAndPassword(_emailController.text, _passwordController.text);
                               if(user != null){
                                 String email = _emailController.text;
+                                print(email);
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng nhập thành công")));
                                 Navigator.pushReplacement(
                                     context, MaterialPageRoute(
