@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ptktpm_final_project/screens/login/login.dart';
+import 'package:ptktpm_final_project/screens/login/signupinformation.dart';
 import 'package:ptktpm_final_project/screens/user/profile.dart';
 import 'package:ptktpm_final_project/services/auth.dart';
 import 'package:ptktpm_final_project/services/dataprocessign.dart';
@@ -27,13 +28,14 @@ class _InformationState extends State<Information> {
             width: double.infinity,
             color: Colors.deepOrange,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              margin: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.symmetric(horizontal: 10,),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundImage: AssetImage('assets/avatar.jpg'), // Thay đổi thành hình ảnh của người dùng
+                    child: Icon(Icons.person), // Thay đổi thành hình ảnh của người dùng
                   ),
                   SizedBox(width: 10),
                   Container(
@@ -42,7 +44,7 @@ class _InformationState extends State<Information> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Tên Người Dùng', // Thay đổi thành tên của người dùng
+                          'Tôi', // Thay đổi thành tên của người dùng
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

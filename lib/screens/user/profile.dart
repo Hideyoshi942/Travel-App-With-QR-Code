@@ -16,34 +16,17 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   FireStoreService _service = FireStoreService();
 
-  late TextEditingController _fullNameController;
-  late TextEditingController _dateOfBirthController;
-  late TextEditingController _genderController;
-  late TextEditingController _hometownController;
-  late TextEditingController _emailController;
-  late TextEditingController _phoneNumberController;
+  final TextEditingController _fullNameController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _fullNameController = TextEditingController();
-    _dateOfBirthController = TextEditingController();
-    _genderController = TextEditingController();
-    _hometownController = TextEditingController();
-    _emailController = TextEditingController();
-    _phoneNumberController = TextEditingController();
-  }
+  final TextEditingController _dateOfBirthController = TextEditingController();
 
-  @override
-  void dispose() {
-    _fullNameController.dispose();
-    _dateOfBirthController.dispose();
-    _genderController.dispose();
-    _hometownController.dispose();
-    _emailController.dispose();
-    _phoneNumberController.dispose();
-    super.dispose();
-  }
+  final TextEditingController _genderController = TextEditingController();
+
+  final TextEditingController _hometownController = TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _phoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -142,40 +125,24 @@ class _ProfileState extends State<Profile> {
                                       "User", 'email', widget.email);
                                   DocumentSnapshot? document =
                                       query?.docs.first;
-                                  if (query != null && query.docs.isNotEmpty) {
-                                    // Kiểm tra xem danh sách có phần tử không
-                                    DocumentSnapshot document =
-                                        query.docs.first;
-                                    _emailController.text = document["email"];
-                                    _fullNameController.text = document["name"];
-                                    _dateOfBirthController.text =
-                                        document["date"];
-                                    _phoneNumberController.text =
-                                        document["phone_Number"];
-                                    _genderController.text = document["gender"];
-                                    _hometownController.text =
-                                        document["address"];
-                                  } else {
-                                    Map<String, dynamic> newdata = {
-                                      'name': _fullNameController.text,
-                                      'date': DateFormat('yyyy/MM/dd')
-                                          .format(DateTime.now()),
-                                      'gender': _genderController.text,
-                                      'address': _hometownController.text,
-                                      'email': widget.email,
-                                      'phone_Number':
-                                          _phoneNumberController.text,
-                                    };
+                                  Map<String, dynamic> newdata = {
+                                    'name': _fullNameController.text,
+                                    'date': DateFormat('yyyy/MM/dd')
+                                        .format(_dateOfBirthController.text as DateTime),
+                                    'gender': _genderController.text,
+                                    'address': _hometownController.text,
+                                    'email': widget.email,
+                                    'phone_Number': _phoneNumberController.text,
+                                  };
 
-                                    _service.updateData(
-                                        "User", document!.id, newdata);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text(
-                                                "thông tin cá nhân đã được cập nhật")));
-                                    Navigator.of(context).pop();
-                                    print('chon sua doi thong tin');
-                                  }
+                                  _service.updateData(
+                                      "User", document!.id, newdata);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "Thông tin cá nhân đã được cập nhật")));
+                                  Navigator.of(context).pop();
+                                  print('chon sua doi thong tin');
                                 },
                                 child: Text('Yes'),
                               ),

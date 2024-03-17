@@ -18,8 +18,17 @@ class SignUpInformation extends StatefulWidget{
 }
 
 class SignUpInformationState extends State<SignUpInformation>{
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
+
+  final TextEditingController _dateOfBirthController = TextEditingController();
+
+  final TextEditingController _genderController = TextEditingController();
+
+  final TextEditingController _hometownController = TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _phoneNumberController = TextEditingController();
   FireStoreService _store = FireStoreService();
   @override
   Widget build(BuildContext context) {
@@ -30,12 +39,12 @@ class SignUpInformationState extends State<SignUpInformation>{
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Cập Nhật Thông Tin Cá Nhân", style: TextStyle(color: Colors.white, fontSize: 30),),
+            Text("Thông Tin Cá Nhân", style: TextStyle(color: Colors.white, fontSize: 30),),
             SizedBox(height: 30),
             SizedBox(
               width: 300,
               child: TextField(
-                controller: _nameController,
+                controller: _fullNameController,
                 decoration: InputDecoration(
                   hintText: "Tên",
                   border: OutlineInputBorder(),
@@ -58,18 +67,21 @@ class SignUpInformationState extends State<SignUpInformation>{
                 ),
               ),
             ),
-
+            SizedBox(height: 20,),
             ElevatedButton(onPressed: (){
               Map<String, dynamic> data = {
-                'name' : _nameController.text,
-                'email' : widget.email,
-                'phone_Number' : _phoneNumberController.text,
-                'date' : DateFormat('yyyy/MM/dd').format(DateTime.now()),
+                'name': _fullNameController.text,
+                'date': DateFormat('yyyy/MM/dd')
+                    .format(_dateOfBirthController.text as DateTime),
+                'gender': _genderController.text,
+                'address': _hometownController.text,
+                'email': widget.email,
+                'phone_Number': _phoneNumberController.text,
               };
               _store.addData(data, "User");
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("ập nhật dữ liệu thành công")));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Cập nhật dữ liệu thành công")));
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Information(widget.email),));
-            }, child: Text("Cập Nhật", style: TextStyle(fontSize: 30),))
+            }, child: Text("Cập Nhật", style: TextStyle(fontSize: 30, color: Colors.blue),))
           ],
         ),
       ),
