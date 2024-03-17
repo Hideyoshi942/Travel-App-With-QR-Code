@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ptktpm_final_project/screens/tour/detailView.dart';
 import 'package:ptktpm_final_project/screens/tour/listTour.dart';
+import 'package:ptktpm_final_project/screens/tour/listTourOther.dart';
 import 'package:ptktpm_final_project/screens/tour/searchTour.dart';
 import 'package:ptktpm_final_project/screens/tour/tourView.dart';
 import 'package:ptktpm_final_project/screens/user/chat.dart';
@@ -369,6 +370,7 @@ class _MyHomePageState extends State<MyHomePage> {
         SizedBox(
           height: 10,
         ),
+        // ListTourOther(name: "Các chuyến đi khác", snapShot: normalSnapShot, email: widget.email),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -412,7 +414,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-
       ],
     );
   }
