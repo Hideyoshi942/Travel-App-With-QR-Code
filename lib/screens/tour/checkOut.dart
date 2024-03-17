@@ -9,6 +9,7 @@ class CheckOut extends StatefulWidget {
   final String image;
   final double price;
   final double quentity;
+  final String email;
 
   const CheckOut({
     Key? key,
@@ -17,6 +18,7 @@ class CheckOut extends StatefulWidget {
     required this.address,
     required this.price,
     required this.quentity,
+    required this.email,
   }) : super(key: key);
 
   @override
@@ -146,7 +148,9 @@ class _CheckOutState extends State<CheckOut> {
                                 image: widget.image,
                                 name: widget.name,
                                 address: widget.address,
-                                price: widget.price)));
+                                price: widget.price,
+                                email: widget.email,
+                            )));
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
@@ -179,6 +183,7 @@ class _CheckOutState extends State<CheckOut> {
                   image: widget.image,
                   price: widget.price,
                   quentity: widget.quentity,
+                  email: widget.email,
                 ),
               ),
             );

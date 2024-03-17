@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ptktpm_final_project/screens/home/mainhomepage.dart';
 import 'package:ptktpm_final_project/screens/home/myhomepage.dart';
 import 'package:ptktpm_final_project/screens/login/signup.dart';
 import 'package:ptktpm_final_project/screens/user/information.dart';
+import 'package:ptktpm_final_project/screens/user/profile.dart';
 import 'package:ptktpm_final_project/services/auth.dart';
+import 'package:ptktpm_final_project/services/dataprocessign.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -17,8 +21,24 @@ bool obserText = true;
 
 class _SignInState extends State<SignIn> {
   final AuthService _auth = new AuthService();
+  FireStoreService _service = FireStoreService();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  Future<String?> signInWithGoogle() async{
+    GoogleSignInAccount? googleUSer = await GoogleSignIn().signIn();
+    String? email = googleUSer?.email;
+    GoogleSignInAuthentication? googleAuth = await googleUSer?.authentication;
+
+    AuthCredential credential =  GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+    return email;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +97,7 @@ class _SignInState extends State<SignIn> {
                                 FocusScope.of(context).unfocus();
                               },
                               child: Icon(
-                                obserText == true ? Icons.visibility : Icons.visibility_off,
+                                obserText == true ? Icons.visibility_off : Icons.visibility,
                                 color: Colors.white70,
                               ),
                             ),
@@ -102,11 +122,11 @@ class _SignInState extends State<SignIn> {
                             else{
                               User? user = await _auth.loginUserWithEmailAndPassword(_emailController.text, _passwordController.text);
                               if(user != null){
-                                String id_Acount = _emailController.text;
+                                String email = _emailController.text;
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng nhập thành công")));
                                 Navigator.pushReplacement(
                                     context, MaterialPageRoute(
-                                  builder: (context) => MainHomePage(),));
+                                  builder: (context) => MainHomePage(email),));
                                 _emailController.clear();
                                 _passwordController.clear();
 
@@ -175,56 +195,78 @@ class _SignInState extends State<SignIn> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 9),
                       Column(
                         children: [
-                          Container(
-                            width: 300,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
+                          ElevatedButton(
+                            onPressed: () async {
+                              String? email = await signInWithGoogle();
+                              QuerySnapshot? query = await _service.getData("Account", "account", email);
+                              if(query?.docs.length == 0){
+                                _service.addData({
+                                  'account' : email,
+                                  'password' : "",
+                                }, 'Account');
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainHomePage(email!),));
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white, // Màu nền của nút
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10), // Định dạng viền của nút
+                              ),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image(
-                                  image: AssetImage('assets/images/icon/google.png'),
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  '  Đăng nhập bằng Google',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
+                            child: Container(
+                              width: 250,
+                              height: 40,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image(
+                                    image: AssetImage('assets/images/icon/google.png'),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(width: 8), // Khoảng cách giữa hình ảnh và văn bản
+                                  Text(
+                                    'Đăng nhập bằng Google',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          SizedBox(height: 10,),
-                          Container(
-                            width: 300,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
+                          SizedBox(height: 9,),
+                          ElevatedButton(
+                            onPressed: () async {
+
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white, // Màu nền của nút
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image(
-                                  image: AssetImage('assets/images/icon/facebook.png'),
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  '  Đăng nhập bằng Facebook',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
+                            child: Container(
+                              width: 250,
+                              height: 40,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image(
+                                    image: AssetImage('assets/images/icon/facebook.png'),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(width: 8), // Khoảng cách giữa hình ảnh và văn bản
+                                  Text(
+                                    'Đăng nhập bằng Facebook',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

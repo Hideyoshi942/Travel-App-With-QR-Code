@@ -31,7 +31,7 @@ Future<void> main() async {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return MainHomePage();
+          return MainHomePage(AutofillHints.email);
         } else {
           return SignIn();
         }

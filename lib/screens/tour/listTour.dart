@@ -1,56 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:ptktpm_final_project/screens/home/mainhomepage.dart';
 import 'package:ptktpm_final_project/screens/home/myhomepage.dart';
+import 'package:ptktpm_final_project/screens/tour/detailView.dart';
 import 'package:ptktpm_final_project/screens/tour/tourModel.dart';
 import 'package:ptktpm_final_project/screens/tour/tourView.dart';
 
 class ListTour extends StatelessWidget {
   final String name;
-
+  final String email;
   final snapShot;
 
-  ListTour({required this.name, required this.snapShot});
+  ListTour({required this.name, required this.snapShot, required this.email});
 
   @override
-  Widget TourView({String? name, String? address, String? image, double? price}) {
+  Widget TourView(BuildContext context, {String? name, String? address, String? image, double? price}) {
     return Card(
       child: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.white),
-            ),
-            height: 250,
-            width: 160,
-            child: Column(
-              children: [
-                Container(
-                  height: 160,
-                  width: 140,
-                  decoration: BoxDecoration(
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => DetailScreen(
+                    image: image,
+                    name: address,
+                    address: name,
+                    price: price!.toDouble(),
+                    email: email,
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.white),
+              ),
+              height: 250,
+              width: 160,
+              child: Column(
+                children: [
+                  Container(
+                    height: 160,
+                    width: 140,
+                    decoration: BoxDecoration(
                       color: Colors.white,
                       image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image:
-                          NetworkImage(image!),),),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  name!,
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-                ),
-                Text(
-                  address!,
-                  style: TextStyle(fontWeight: FontWeight.w400),
-                ),
-                Text(
-                  "VND " + price.toString(),
-                  style: TextStyle(
-                      color: Colors.orangeAccent, fontWeight: FontWeight.w500),
-                ),
-              ],
+                        fit: BoxFit.cover,
+                        image:
+                        NetworkImage(image!),),),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    name!,
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                  ),
+                  Text(
+                    address!,
+                    style: TextStyle(fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    "VND " + price.toString(),
+                    style: TextStyle(
+                        color: Colors.orangeAccent, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -68,7 +85,7 @@ class ListTour extends StatelessWidget {
             onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => MainHomePage()),
+                MaterialPageRoute(builder: (context) => MainHomePage(email)),
               );
             },
             icon: Icon(Icons.arrow_back, color: Colors.white,)),
@@ -107,7 +124,7 @@ class ListTour extends StatelessWidget {
                   child: GridView.builder(
                     itemCount: snapShot.data.docs.length,
                     itemBuilder: (context, index) =>
-                        TourView(name: snapShot.data.docs[index]["name"],
+                        TourView(context, name: snapShot.data.docs[index]["name"],
                             image: snapShot.data.docs[index]["image"],
                             address: snapShot.data.docs[index]["address"],
                             price: snapShot.data.docs[index]["price"],

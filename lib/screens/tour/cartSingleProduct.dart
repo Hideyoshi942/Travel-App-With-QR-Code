@@ -88,15 +88,15 @@ class _CartSingleProductState extends State<CartSingleProduct> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  GestureDetector(
-                                    onTap: decrementCount,
-                                    child: Icon(Icons.remove),
-                                  ),
+                                  // GestureDetector(
+                                  //   onTap: decrementCount,
+                                  //   child: Icon(Icons.remove),
+                                  // ),
                                   Text(count.toString()),
-                                  GestureDetector(
-                                    onTap: incrementCount,
-                                    child: Icon(Icons.add),
-                                  ),
+                                  // GestureDetector(
+                                  //   onTap: incrementCount,
+                                  //   child: Icon(Icons.add),
+                                  // ),
                                 ],
                               ),
                             ),

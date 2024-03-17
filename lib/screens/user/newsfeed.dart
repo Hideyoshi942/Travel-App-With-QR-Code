@@ -27,6 +27,7 @@ class _NewsFeedState extends State<NewsFeed> {
           'Bảng tin',
           style: TextStyle(color: Colors.white),
         ),
+        iconTheme: IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

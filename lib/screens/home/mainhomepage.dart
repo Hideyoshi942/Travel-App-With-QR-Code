@@ -7,20 +7,26 @@ import 'package:ptktpm_final_project/screens/user/favorite.dart';
 import 'package:ptktpm_final_project/screens/user/information.dart';
 import 'package:ptktpm_final_project/screens/user/newsfeed.dart';
 class MainHomePage extends StatefulWidget {
-  const MainHomePage({super.key});
+  String email;
+  MainHomePage(this.email);
 
   @override
   State<MainHomePage> createState() => _MainHomePageState();
 }
 
 class _MainHomePageState extends State<MainHomePage> {
-  List pages = [
-    MyHomePage(),
-    NewsFeed(),
-    PhotoScreen(camera: cameras),
-    Favorite(),
-    Information(),
-  ];
+  late List pages;
+
+  @override
+  void initState() {
+    pages = [
+      MyHomePage(widget.email),
+      NewsFeed(),
+      PhotoScreen(camera: cameras),
+      Favorite(),
+      Information(widget.email),
+    ];
+  }
   int currentIndex = 0;
   void onTap(int index) {
     setState(() {

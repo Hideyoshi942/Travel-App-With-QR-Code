@@ -11,7 +11,9 @@ import 'package:ptktpm_final_project/services/dataprocessign.dart';
 import '../tour/tourModel.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  String email;
+
+  MyHomePage(this.email);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -29,6 +31,25 @@ class _MyHomePageState extends State<MyHomePage> {
   late TourProduct maria;
   late TourProduct lama;
   var newAchivesSnapShot;
+
+  // hotel
+  late TourProduct ht1;
+  late TourProduct ht2;
+  late TourProduct ht3;
+  var hotelSnapShot;
+
+  // play
+  late TourProduct play1;
+  late TourProduct play2;
+  late TourProduct play3;
+  var playSnapShot;
+
+  // normal
+  late TourProduct normal1;
+  late TourProduct normal2;
+  late TourProduct normal3;
+  late TourProduct normal4;
+  var normalSnapShot;
 
   Widget _buildCategoryTour(String? image, String? name) {
     return Column(
@@ -162,6 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     builder: (context) => ListTour(
                       name: "Được yêu thích",
                       snapShot: featuresSnapshot,
+                      email: widget.email,
                     ),
                   ),
                 );
@@ -189,6 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         name: phuquoc.address,
                         address: phuquoc.name,
                         price: phuquoc.price,
+                        email: widget.email,
                       ),
                     ),
                   );
@@ -209,6 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         name: sapa.address,
                         address: sapa.name,
                         price: sapa.price,
+                        email: widget.email,
                       ),
                     ),
                   );
@@ -229,6 +253,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         name: bana.address,
                         address: bana.name,
                         price: bana.price,
+                        email: widget.email,
                       ),
                     ),
                   );
@@ -259,13 +284,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'New Tour',
+                    'Chuyến đi mới',
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 14,
-                    color: Colors.blue,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => ListTour(
+                            name: "Chuyến đi mới",
+                            email: widget.email,
+                            snapShot: newAchivesSnapShot,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 14,
+                      color: Colors.blue,
+                    ),
                   ),
                 ],
               ),
@@ -297,6 +335,325 @@ class _MyHomePageState extends State<MyHomePage> {
                 address: lama.address,
                 name: lama.name,
                 price: lama.price,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTourNormal() {
+    return Column(
+      children: [
+        Container(
+          height: 50,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Các chuyến đi khác',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Column(
+                children: [
+                  _buildNewTour(
+                    image: normal1.image,
+                    address: normal1.address,
+                    name: normal1.name,
+                    price: normal1.price,
+                  ),
+                  _buildNewTour(
+                    image: normal2.image,
+                    address: normal2.address,
+                    name: normal2.name,
+                    price: normal2.price,
+                  ),
+                ],
+              ),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Column(
+                children: [
+                  _buildNewTour(
+                    image: normal3.image,
+                    address: normal3.address,
+                    name: normal3.name,
+                    price: normal3.price,
+                  ),
+                  _buildNewTour(
+                    image: normal4.image,
+                    address: normal4.address,
+                    name: normal4.name,
+                    price: normal4.price,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+
+      ],
+    );
+  }
+
+  Widget _buildAds1() {
+    return Container(
+      height: 80,
+      width: double.infinity,
+      child: Image.network(
+        "https://www.wordstream.com/wp-content/uploads/2021/07/persuasive-ads-coca-cola-1.jpg",
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Widget _buildAds2() {
+    return Column(
+      children: [
+        Container(
+          height: 50,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Khuyến mãi',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Icon(
+                    Icons.arrow_downward,
+                    color: Colors.blue,
+                    size: 16,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 60,
+                child: Flexible(
+                  child: Image.network(
+                      "https://bizweb.dktcdn.net/100/403/043/themes/786118/assets/slide-img3.png?1649906484793",
+                      fit: BoxFit.cover),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                height: 60,
+                child: Flexible(
+                  child: Image.network(
+                      "https://bizweb.dktcdn.net/100/403/043/themes/786118/assets/slide-img1.png?1649906484793",
+                      fit: BoxFit.cover),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                height: 60,
+                child: Flexible(
+                  child: Image.network(
+                      "https://viettelmoney.vn/wp-content/uploads/2022/09/voucher-giam-gia.jpg",
+                      fit: BoxFit.cover),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                height: 60,
+                child: Flexible(
+                  child: Image.network(
+                      "https://static.vivnpay.vn/vnpay_landing_old/93688y1652081165239_0.jpeg",
+                      fit: BoxFit.cover),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                height: 60,
+                child: Flexible(
+                  child: Image.network(
+                      "https://cdn.tgdd.vn/Files/2022/01/20/1411900/avakids-2_1280x720-800-resize.png",
+                      fit: BoxFit.cover),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHotel() {
+    return Column(
+      children: [
+        Container(
+          height: 50,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Khám phá các khách sạn',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => ListTour(
+                            name: "Khám phá các khách sạn",
+                            email: widget.email,
+                            snapShot: hotelSnapShot,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 14,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildNewTour(
+                image: ht1.image,
+                address: ht1.address,
+                name: ht1.name,
+                price: ht1.price,
+              ),
+              _buildNewTour(
+                image: ht2.image,
+                address: ht2.address,
+                name: ht2.name,
+                price: ht2.price,
+              ),
+              _buildNewTour(
+                image: ht3.image,
+                address: ht3.address,
+                name: ht3.name,
+                price: ht3.price,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPlay() {
+    return Column(
+      children: [
+        Container(
+          height: 50,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Các khu vui chơi nổi tiếng',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => ListTour(
+                            name: "Các khu vui chơi nổi tiếng",
+                            email: widget.email,
+                            snapShot: playSnapShot,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 14,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildNewTour(
+                image: play1.image,
+                address: play1.address,
+                name: play1.name,
+                price: play1.price,
+              ),
+              _buildNewTour(
+                image: play2.image,
+                address: play2.address,
+                name: play2.name,
+                price: play2.price,
+              ),
+              _buildNewTour(
+                image: play3.image,
+                address: play3.address,
+                name: play3.name,
+                price: play3.price,
               ),
             ],
           ),
@@ -414,76 +771,194 @@ class _MyHomePageState extends State<MyHomePage> {
               address: snapshot.data!.docs[2]["address"],
               price: snapshot.data!.docs[2]["price"]);
           return FutureBuilder(
-              future: FirebaseFirestore.instance
-                  .collection("Tour")
-                  .doc("EtY6L9CkRc3j7j8zn7C1")
-                  .collection("newachives")
-                  .get(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                london = TourProduct(
-                    name: snapshot.data!.docs[0]["name"],
-                    image: snapshot.data!.docs[0]["image"],
-                    address: snapshot.data!.docs[0]["address"],
-                    price: snapshot.data!.docs[0]["price"]);
-                maria = TourProduct(
-                    name: snapshot.data!.docs[1]["name"],
-                    image: snapshot.data!.docs[1]["image"],
-                    address: snapshot.data!.docs[1]["address"],
-                    price: snapshot.data!.docs[1]["price"]);
-                lama = TourProduct(
-                    name: snapshot.data!.docs[2]["name"],
-                    image: snapshot.data!.docs[2]["image"],
-                    address: snapshot.data!.docs[2]["address"],
-                    price: snapshot.data!.docs[2]["price"]);
-                newAchivesSnapShot = snapshot;
-                return Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: ListView(
-                    children: [
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
+            future: FirebaseFirestore.instance
+                .collection("Tour")
+                .doc("EtY6L9CkRc3j7j8zn7C1")
+                .collection("newachives")
+                .get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              london = TourProduct(
+                  name: snapshot.data!.docs[0]["name"],
+                  image: snapshot.data!.docs[0]["image"],
+                  address: snapshot.data!.docs[0]["address"],
+                  price: snapshot.data!.docs[0]["price"]);
+              maria = TourProduct(
+                  name: snapshot.data!.docs[1]["name"],
+                  image: snapshot.data!.docs[1]["image"],
+                  address: snapshot.data!.docs[1]["address"],
+                  price: snapshot.data!.docs[1]["price"]);
+              lama = TourProduct(
+                  name: snapshot.data!.docs[2]["name"],
+                  image: snapshot.data!.docs[2]["image"],
+                  address: snapshot.data!.docs[2]["address"],
+                  price: snapshot.data!.docs[2]["price"]);
+              newAchivesSnapShot = snapshot;
+              return FutureBuilder(
+                future: FirebaseFirestore.instance
+                    .collection("Tour")
+                    .doc("EtY6L9CkRc3j7j8zn7C1")
+                    .collection("hotel")
+                    .get(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  ht1 = TourProduct(
+                      name: snapshot.data!.docs[0]["name"],
+                      image: snapshot.data!.docs[0]["image"],
+                      address: snapshot.data!.docs[0]["address"],
+                      price: snapshot.data!.docs[0]["price"]);
+                  ht2 = TourProduct(
+                      name: snapshot.data!.docs[1]["name"],
+                      image: snapshot.data!.docs[1]["image"],
+                      address: snapshot.data!.docs[1]["address"],
+                      price: snapshot.data!.docs[1]["price"]);
+                  ht3 = TourProduct(
+                      name: snapshot.data!.docs[2]["name"],
+                      image: snapshot.data!.docs[2]["image"],
+                      address: snapshot.data!.docs[2]["address"],
+                      price: snapshot.data!.docs[2]["price"]);
+                  hotelSnapShot = snapshot;
+                  return FutureBuilder(
+                    future: FirebaseFirestore.instance
+                        .collection("Tour")
+                        .doc("EtY6L9CkRc3j7j8zn7C1")
+                        .collection("play")
+                        .get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      play1 = TourProduct(
+                          name: snapshot.data!.docs[0]["name"],
+                          image: snapshot.data!.docs[0]["image"],
+                          address: snapshot.data!.docs[0]["address"],
+                          price: snapshot.data!.docs[0]["price"]);
+                      play2 = TourProduct(
+                          name: snapshot.data!.docs[1]["name"],
+                          image: snapshot.data!.docs[1]["image"],
+                          address: snapshot.data!.docs[1]["address"],
+                          price: snapshot.data!.docs[1]["price"]);
+                      play3 = TourProduct(
+                          name: snapshot.data!.docs[2]["name"],
+                          image: snapshot.data!.docs[2]["image"],
+                          address: snapshot.data!.docs[2]["address"],
+                          price: snapshot.data!.docs[2]["price"]);
+                      playSnapShot = snapshot;
+                      return FutureBuilder(
+                        future: FirebaseFirestore.instance
+                            .collection("Tour")
+                            .doc("EtY6L9CkRc3j7j8zn7C1")
+                            .collection("vietnam")
+                            .get(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          normal1 = TourProduct(
+                              name: snapshot.data!.docs[0]["name"],
+                              image: snapshot.data!.docs[0]["image"],
+                              address: snapshot.data!.docs[0]["address"],
+                              price: snapshot.data!.docs[0]["price"]);
+                          normal2 = TourProduct(
+                              name: snapshot.data!.docs[1]["name"],
+                              image: snapshot.data!.docs[1]["image"],
+                              address: snapshot.data!.docs[1]["address"],
+                              price: snapshot.data!.docs[1]["price"]);
+                          normal3 = TourProduct(
+                              name: snapshot.data!.docs[2]["name"],
+                              image: snapshot.data!.docs[2]["image"],
+                              address: snapshot.data!.docs[2]["address"],
+                              price: snapshot.data!.docs[2]["price"]);
+                          normal4 = TourProduct(
+                              name: snapshot.data!.docs[3]["name"],
+                              image: snapshot.data!.docs[3]["image"],
+                              address: snapshot.data!.docs[3]["address"],
+                              price: snapshot.data!.docs[3]["price"]);
+                          normalSnapShot = snapshot;
+                          return Container(
+                            height: double.infinity,
                             width: double.infinity,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            margin: EdgeInsets.symmetric(horizontal: 20),
+                            child: ListView(
                               children: [
                                 Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    _buildImageSlider(),
-                                    // category
-                                    _buildCategory(),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              _buildImageSlider(),
+                                              // category
+                                              _buildCategory(),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    // ads1
+                                    _buildAds1(),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    // features
+                                    _buildFeatures(),
+                                    //ads2
+                                    _buildAds2(),
+                                    // new tour
+                                    _buildTour(),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    // hotel
+                                    _buildHotel(),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    // khu vui choi
+                                    _buildPlay(),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    // tour defferient
+                                    _buildTourNormal(),
                                   ],
                                 ),
                               ],
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          // features
-                          _buildFeatures(),
-                          // new tour
-                          _buildTour(),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              });
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          );
         },
       ),
     );

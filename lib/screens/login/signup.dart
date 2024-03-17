@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ptktpm_final_project/model/Account.dart';
+import 'package:ptktpm_final_project/screens/home/mainhomepage.dart';
 import 'package:ptktpm_final_project/screens/login/login.dart';
+import 'package:ptktpm_final_project/screens/login/signupinformation.dart';
+import 'package:ptktpm_final_project/screens/user/profile.dart';
 import 'package:ptktpm_final_project/services/auth.dart';
 import 'package:ptktpm_final_project/services/dataprocessign.dart';
 
@@ -112,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                           FocusScope.of(context).unfocus();
                         },
                         child: Icon(
-                          obserText == true ? Icons.visibility : Icons.visibility_off,
+                          obserText == true ? Icons.visibility_off : Icons.visibility,
                           color: Colors.white70,
                         ),
                       ),
@@ -150,20 +153,25 @@ class _SignUpState extends State<SignUp> {
                   width: 300,
                   child: ElevatedButton(
                     onPressed: () async {
-                        User? user = await _auth.registerUserWithEmailAndPassword(_emailController.text, _passwordController.text);
-                        if(user != null){
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký thành công")));
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SignIn(),
-                              ),
-                          );
-                          _emailController.clear();
-                          _passwordController.clear();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký không thành công")));
-                        }
+                      User? user = await _auth.registerUserWithEmailAndPassword(_emailController.text, _passwordController.text);
+                      if(user != null){
+                        _fireStore.addData({
+                          'account' : _emailController.text,
+                          'password' : _passwordController.text,
+                        }, 'Account');
+                        String email = _emailController.text;
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký thành công")));
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignUpInformation(email),
+                          ),
+                        );
+                        _emailController.clear();
+                        _passwordController.clear();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Đăng ký không thành công")));
+                      }
                     },
                     child: Text(
                       'Đăng ký',

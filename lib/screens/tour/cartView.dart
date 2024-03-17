@@ -12,6 +12,8 @@ class CartScreen extends StatefulWidget {
   final String image;
   final double price;
   final double quentity;
+  final String email;
+
 
   const CartScreen({
     super.key,
@@ -20,6 +22,8 @@ class CartScreen extends StatefulWidget {
     required this.image,
     required this.price,
     required this.quentity,
+    required this.email,
+
   });
 
   @override
@@ -51,6 +55,8 @@ class _CartScreenState extends State<CartScreen> {
                       image: widget.image,
                       price: widget.price,
                       quentity: widget.quentity,
+                      email: widget.email,
+
                   ),),
             );
           },
@@ -64,7 +70,7 @@ class _CartScreenState extends State<CartScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MainHomePage()),
+              MaterialPageRoute(builder: (context) => MainHomePage(widget.email)),
             );
           },
           icon: Icon(

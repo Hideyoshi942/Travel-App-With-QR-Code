@@ -58,6 +58,8 @@ dependencies:
   flutter_xlider: ^3.5.0
   image: ^4.0.15
   syncfusion_flutter_sliders: ^21.2.9
+  intl: ^0.18.0
+
 
 dev_dependencies:
   flutter_test:
