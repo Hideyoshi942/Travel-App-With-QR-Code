@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ptktpm_final_project/screens/login/login.dart';
 import 'package:ptktpm_final_project/screens/login/signupinformation.dart';
 import 'package:ptktpm_final_project/screens/user/profile.dart';
@@ -106,6 +107,7 @@ class _InformationState extends State<Information> {
             title: Text('Đăng xuất'),
             onTap: () async {
               await _auth.signOut();
+              await GoogleSignIn().signOut();
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn(),));
             },
           ),

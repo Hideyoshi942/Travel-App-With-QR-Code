@@ -27,16 +27,7 @@ Future<void> main() async {
               ))
       : await Firebase.initializeApp();
   runApp(MaterialApp(
-    home: StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return MainHomePage(AutofillHints.email);
-        } else {
-          return SignIn();
-        }
-      },
-    ),
+    home: SignIn(),
     debugShowCheckedModeBanner: false,
   ));
 }

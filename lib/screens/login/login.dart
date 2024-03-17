@@ -47,8 +47,8 @@ class _SignInState extends State<SignIn> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             User? user = snapshot.data;
-            String? id_Account = user?.email;
-            return(Text("!"));
+            String? email = user?.email;
+            return(MainHomePage(email!));
           } else {
             return Scaffold(
               backgroundColor: Colors.blue,

@@ -91,7 +91,6 @@ flutter:
     - assets/images/tour/tour_1/
     - assets/images/icon/
     - assets/images/icon/tien_ich/
-    - assets/camera/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
