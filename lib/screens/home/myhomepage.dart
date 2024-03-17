@@ -6,6 +6,7 @@ import 'package:ptktpm_final_project/screens/tour/listTour.dart';
 import 'package:ptktpm_final_project/screens/tour/tourView.dart';
 import 'package:ptktpm_final_project/screens/user/information.dart';
 import 'package:ptktpm_final_project/services/dataprocessign.dart';
+import '../tour/searchTour.dart';
 import '../tour/tourModel.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -18,6 +19,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final TextEditingController _searchController = TextEditingController();
   // features
   late TourProduct phuquoc;
   late TourProduct sapa;
@@ -333,13 +335,67 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Icon(Icons.search, color: Colors.grey),
+                        padding: const EdgeInsets.only(left: 0),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5),
+                                ),
+                            ),
+                            onPressed: () async {
+                              List<Map<String, dynamic>> list = [];
+                               DocumentSnapshot documentsn = await FirebaseFirestore.instance.
+                               collection("Tour").doc('EtY6L9CkRc3j7j8zn7C1').get();
+
+                               QuerySnapshot vn = await documentsn.reference.collection("vietnam").get();
+                                vn.docs.forEach((e) {
+                                  String search = e["address"].toLowerCase().trim();
+                                  if(search == _searchController.text.toLowerCase().trim()){
+
+                                    Map<String, dynamic> m = {};
+                                    m['address'] = e['address'];
+                                    m['image'] = e['image'];
+                                    m['name'] = e['name'];
+                                    m['price'] = e['price'];
+                                    list.add(m);
+                                  }
+                                });
+
+                              QuerySnapshot na = await documentsn.reference.collection("newachives").get();
+                              na.docs.forEach((e) {
+                                String search = e["address"].toLowerCase().trim();
+                                if(search == _searchController.text.toLowerCase().trim()){
+
+                                  Map<String, dynamic> m = {};
+                                  m['address'] = e['address'];
+                                  m['image'] = e['image'];
+                                  m['name'] = e['name'];
+                                  m['price'] = e['price'];
+                                  list.add(m);
+                                }
+                              });
+
+                              QuerySnapshot fp = await documentsn.reference.collection("featureproduct").get();
+                              fp.docs.forEach((e) {
+                                String search = e["address"].toLowerCase().trim();
+                                if(search == _searchController.text.toLowerCase().trim()){
+                                  Map<String, dynamic> m = {};
+                                  m['address'] = e['address'];
+                                  m['image'] = e['image'];
+                                  m['name'] = e['name'];
+                                  m['price'] = e['price'];
+                                  list.add(m);
+                                }
+                              });
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => SearchTour(_searchController.text, list),)) ;
+                            },
+                            child: Icon(Icons.search, color: Colors.grey)),
                       ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: TextFormField(
+                            controller: _searchController,
                             style: TextStyle(color: Colors.grey),
                             onTap: () {},
                             decoration: InputDecoration(
