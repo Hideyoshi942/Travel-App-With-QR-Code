@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ptktpm_final_project/screens/home/mainhomepage.dart';
 import 'package:ptktpm_final_project/screens/tour/cartView.dart';
 import 'package:ptktpm_final_project/screens/tour/detailView.dart';
+import 'package:ptktpm_final_project/screens/tour/showTour.dart';
+import 'package:ptktpm_final_project/services/dataprocessign.dart';
 
 class CheckOut extends StatefulWidget {
   final String name;
@@ -26,6 +30,7 @@ class CheckOut extends StatefulWidget {
 }
 
 class _CheckOutState extends State<CheckOut> {
+  FireStoreService _service = FireStoreService();
   Widget _buildSingleCartProduct() {
     return Column(
       children: [
@@ -142,15 +147,75 @@ class _CheckOutState extends State<CheckOut> {
                   content: Text("Thanh toán thành công!"),
                   actions: [
                     TextButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DetailScreen(
-                                image: widget.image,
-                                name: widget.name,
-                                address: widget.address,
-                                price: widget.price,
-                                email: widget.email,
-                            )));
+                      onPressed: () async {
+                        QuerySnapshot? queryUser = await _service.getData("User", "email", widget.email);
+                        String idTour = "";
+                        QuerySnapshot queryFeatureproduct = await FirebaseFirestore.instance.collection("Tour").
+                        doc("EtY6L9CkRc3j7j8zn7C1").collection("featureproduct").get();
+
+                        queryFeatureproduct.docs.forEach((element){
+                          if(element["address"] == widget.address){
+                            idTour = element.id;
+                            _service.updateData("User", queryUser!.docs.first.id,
+                                {"idTour" : idTour});
+                            Navigator.pushReplacement(
+                                context, MaterialPageRoute(builder: (context) => MainHomePage(widget.email),));
+                            String address, image, name;
+                            double price;
+                            address = element["address"];
+                            image = element["image"];
+                            name = element["name"];
+                            price = element["price"];
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => ShowTour(address, image, name, price),));
+
+                            return;
+                          }
+                        });
+
+                        QuerySnapshot queryNewachives = await FirebaseFirestore.instance.collection("Tour").
+                        doc("EtY6L9CkRc3j7j8zn7C1").collection("newachives").get();
+
+                        queryNewachives.docs.forEach((element){
+                          if(element["address"] == widget.address){
+                            idTour = element.id;
+                            _service.updateData("User", queryUser!.docs.first.id,
+                                {"idTour" : idTour});
+                            Navigator.pushReplacement(
+                                context, MaterialPageRoute(builder: (context) => MainHomePage(widget.email),));
+                            String address, image, name;
+                            double price;
+                            address = queryUser.docs.first["address"];
+                            image = queryUser.docs.first["image"];
+                            name = queryUser.docs.first["name"];
+                            price = queryUser.docs.first["price"];
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => ShowTour(address, image, name, price),));
+                            return;
+                          }
+                        });
+
+                        QuerySnapshot queryVietNam = await FirebaseFirestore.instance.collection("Tour").
+                        doc("EtY6L9CkRc3j7j8zn7C1").collection("vietnam").get();
+
+                        queryVietNam.docs.forEach((element){
+                          if(element["address"] == widget.address){
+                            idTour = element.id;
+                            _service.updateData("User", queryUser!.docs.first.id,
+                                {"idTour" : idTour});
+                            Navigator.pushReplacement(
+                                context, MaterialPageRoute(builder: (context) => MainHomePage(widget.email),));
+                            String address, image, name;
+                            double price;
+                            address = queryUser.docs.first["address"];
+                            image = queryUser.docs.first["image"];
+                            name = queryUser.docs.first["name"];
+                            price = queryUser.docs.first["price"];
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => ShowTour(address, image, name, price),));
+                            return;
+                          }
+                        });
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(

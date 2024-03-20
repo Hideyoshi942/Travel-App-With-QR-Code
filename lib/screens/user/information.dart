@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ptktpm_final_project/screens/login/login.dart';
 import 'package:ptktpm_final_project/screens/login/signupinformation.dart';
+import 'package:ptktpm_final_project/screens/tour/showTour.dart';
 import 'package:ptktpm_final_project/screens/user/profile.dart';
 import 'package:ptktpm_final_project/services/auth.dart';
 import 'package:ptktpm_final_project/services/dataprocessign.dart';
@@ -68,7 +70,18 @@ class _InformationState extends State<Information> {
           ListTile(
             leading: Icon(Icons.shopping_cart),
             title: Text('Đơn hàng của tôi'),
-            onTap: () {
+            onTap: () async{
+              QuerySnapshot? queryUser = await _service.getData("User", "email", widget.email);
+              String idTour = queryUser?.docs.first["idTour"];
+              DocumentSnapshot document = await FirebaseFirestore.instance.collection("Tour").
+              doc("EtY6L9CkRc3j7j8zn7C1").collection("featureproduct").doc(idTour).get();
+              String address, image, name;
+              double price;
+              address = document["address"];
+              image = document["image"];
+              name = document["name"];
+              price = document["price"];
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ShowTour(address, image, name, price),));
               // Xử lý khi người dùng chọn tùy chọn này
             },
           ),

@@ -212,8 +212,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     MaterialPageRoute(
                       builder: (context) => DetailScreen(
                         image: phuquoc.image,
-                        name: phuquoc.address,
-                        address: phuquoc.name,
+                        name: phuquoc.name,
+                        address: phuquoc.address,
                         price: phuquoc.price,
                         email: widget.email,
                       ),
@@ -233,8 +233,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     MaterialPageRoute(
                       builder: (context) => DetailScreen(
                         image: sapa.image,
-                        name: sapa.address,
-                        address: sapa.name,
+                        name: sapa.name,
+                        address: sapa.address,
                         price: sapa.price,
                         email: widget.email,
                       ),
@@ -254,8 +254,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     MaterialPageRoute(
                       builder: (context) => DetailScreen(
                         image: bana.image,
-                        name: bana.address,
-                        address: bana.name,
+                        name: bana.name,
+                        address: bana.address,
                         price: bana.price,
                         email: widget.email,
                       ),

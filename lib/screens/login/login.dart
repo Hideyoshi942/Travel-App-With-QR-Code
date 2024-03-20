@@ -203,6 +203,7 @@ class _SignInState extends State<SignIn> {
                             onPressed: () async {
                               String? email = await signInWithGoogle();
                               QuerySnapshot? query = await _service.getData("Account", "account", email);
+                              QuerySnapshot? queryUser = await _service.getData("User", "email", email);
                               if(query?.docs.length == 0){
                                 _service.addData({
                                   'account' : email,
