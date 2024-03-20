@@ -127,8 +127,7 @@ class _ProfileState extends State<Profile> {
                                       query?.docs.first;
                                   Map<String, dynamic> newdata = {
                                     'name': _fullNameController.text,
-                                    'date': DateFormat('yyyy/MM/dd')
-                                        .format(_dateOfBirthController.text as DateTime),
+                                    'date': _dateOfBirthController.text,
                                     'gender': _genderController.text,
                                     'address': _hometownController.text,
                                     'email': widget.email,

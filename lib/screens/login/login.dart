@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ptktpm_final_project/screens/home/mainhomepage.dart';
 import 'package:ptktpm_final_project/screens/home/myhomepage.dart';
 import 'package:ptktpm_final_project/screens/login/signup.dart';
+import 'package:ptktpm_final_project/screens/login/signupinformation.dart';
 import 'package:ptktpm_final_project/screens/user/information.dart';
 import 'package:ptktpm_final_project/screens/user/profile.dart';
 import 'package:ptktpm_final_project/services/auth.dart';
@@ -47,8 +48,8 @@ class _SignInState extends State<SignIn> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             User? user = snapshot.data;
-            String? email = user?.email;
-            return(MainHomePage(email!));
+            String? id_Account = user?.email;
+            return(MainHomePage(id_Account!));
           } else {
             return Scaffold(
               backgroundColor: Colors.blue,
@@ -207,7 +208,7 @@ class _SignInState extends State<SignIn> {
                                   'account' : email,
                                   'password' : "",
                                 }, 'Account');
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainHomePage(email!),));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpInformation(email!)));
                               }
                             },
                             style: ElevatedButton.styleFrom(

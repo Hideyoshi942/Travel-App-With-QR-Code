@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ptktpm_final_project/screens/home/mainhomepage.dart';
 import 'package:ptktpm_final_project/screens/user/information.dart';
 import 'package:ptktpm_final_project/services/dataprocessign.dart';
 
@@ -72,7 +73,7 @@ class SignUpInformationState extends State<SignUpInformation>{
               Map<String, dynamic> data = {
                 'name': _fullNameController.text,
                 'date': DateFormat('yyyy/MM/dd')
-                    .format(_dateOfBirthController.text as DateTime),
+                    .format(DateTime.now()),
                 'gender': _genderController.text,
                 'address': _hometownController.text,
                 'email': widget.email,
@@ -80,13 +81,11 @@ class SignUpInformationState extends State<SignUpInformation>{
               };
               _store.addData(data, "User");
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Cập nhật dữ liệu thành công")));
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Information(widget.email),));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainHomePage(widget.email),));
             }, child: Text("Cập Nhật", style: TextStyle(fontSize: 30, color: Colors.blue),))
           ],
         ),
       ),
     );
   }
-
-
 }
